@@ -4,17 +4,18 @@ const Product = require("./Product");
 const Schema = mongoose.Schema;
 const orderSchema = Schema(
   {
-    shipTo: { type: String, required: true },
+    userId: { type: mongoose.ObjectId, ref: User, required: true },
+    status: { type: String, default: "preparing" },
+    totalPrice: { type: Number, required: true, default: 0 },
+    shipTo: { type: Object, required: true },
     contact: { type: String, required: true },
-    totalPrice: { type: Number, required: true },
-    userId: { type: mongoose.ObjectId, ref:User },
-    status: { type: String },
+    orderNum: { type: String },
     items: [
       {
-        productId: { type: mongoose.ObjectId, ref:Product },
+        productId: { type: mongoose.ObjectId, ref: Product, required: true },
+        price: { type: Number, required: true },
         qty: { type: Number, required: true },
         size: { type: String, required: true },
-        price: { type: Number, required: true },
       },
     ],
   },
