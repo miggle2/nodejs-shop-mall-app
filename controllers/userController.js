@@ -28,7 +28,12 @@ userController.createUser = async (req, res) => {
 
 userController.getUser = async (req, res) => {
   try {
-    res.status(200).json({status:"sucess"})
+    const { userId } = req;
+    const user = await User.findById(userId);
+    if (user) {
+      res.status(200).json({ status: "sucess", user });
+    }
+    throw new Error("invalid token");
   } catch (error) {
     res.status(400).json({ status: "fail", message: error.message });
   }
